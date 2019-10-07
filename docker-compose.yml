@@ -1,0 +1,18 @@
+version: '3.7'
+services:
+  python:
+    build: .
+    image: ajgrande924/py-pg:latest
+    container_name: py
+    depends_on:
+      - pg-postgresql
+  pg-postgresql:
+    image: postgres:11-alpine
+    container_name: pg
+    ports:
+      - 5432:5432
+    volumes:
+      - ./postgres/initdb.d:/docker-entrypoint-initdb.d
+      - dbdata:/var/lib/postgresql/data
+volumes:
+  dbdata:
